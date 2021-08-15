@@ -1,0 +1,597 @@
+---
+title: "Trabalho final - Análise de dados 2021/1"
+author: "Liliane Gobetti Fagundes"
+output: html_document
+
+---
+
+```{r}
+chooseCRANmirror(graphics=FALSE, ind=1)
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+ <div style="text-align: justify">
+
+
+IMPACTO DA RENDA NOS RESULTADOS ELEITORAIS 
+
+
+1.	INTRODUÇÃO
+
+  Nos últimos anos há inúmeros trabalhos que apresentam o debate sobre a questão de gênero nos espaços de poder. Primordialmente, a falta de representação feminina nos espaços políticos e o quanto isso reflete em políticas públicas nas mais diversas áreas, principalmente em questões relacionadas diretamente com a saúde feminina e a direitos reprodutivos, e até mesmo com as implicações para a própria democracia.   
+  Do ponto de vista sociológico, diversas autoras abordam o que é considerado o "papel da mulher". Carole Pateman em seu livro chamado "O Contrato sexual" explana sobre a dicotomia entre privado e público, sobre como a mulher esta “naturalmente” voltada para uma vida privada, onde caberia a ela as atividades ditas reprodutivas (por exemplo, casa, atividades domésticas, maternidade), enquanto o homem estaria voltado para a vida pública, para atividades ditas produtivas (comércio, indústria, entre outros). Essa diferenciação e divisão tão arraigada socialmente e culturalmente nas sociedades, especialmente na brasileira, repercutem fortemente nos cargos e funções ocupados pelas mulheres. Essa dicotomia tão naturalizada e normalizada influencia na forma que pensamos sobre gênero, política e representação. Nesse cenário de pouca representatividade, a violência contra candidatas mulheres é a cada eleição maior. Algumas são alvos das mais absurdas histórias no intituito de descredibilizá-las e, quase sempre, são violências pautadas no gênero e na sexualidade. 
+  A literatura política, aponta diversos fatores como motivos para a baixa representação de mulheres em cargos políticos.Um dos principais, pontuado por Speck e Sacchet (2012a) é de que o financiamento de campanha das mulheres é significativamente menor que o dos homens, e dada à importância que financiamento tem para o sucesso eleitoral, e a correlação entre arrecadação de campanha e número de eleitos, esse pode ser um dos motivos de termos menos mulheres eleitas, visto que as mulheres arrecadam menos dinheiro para as campanhas e recebem menos da distribuição feita pelos partidos. Speck e Mancuso (2014) também pontuam essa associação e correlação positiva e estatisticamente significativa entre recursos e votos para as eleições. 
+  Sacchet e Speck (2012b) argumentam que as mulheres têm menos recursos próprios para investir na fase inicial das campanhas, sendo essa desigualdade progressiva ao longo da vida dessas candidatas dado que os homens recebem mais incentivo financeiro da iniciativa privada (quando ainda era permitido) e dos partidos. A partir disso, a questão de pesquisa central do trabalho é observar se a renda declarada pelas candidatas influencia em seus resultados eleitorais. Cabe ressaltar que para além da renda há outras variáveis essenciais para a compreensão do fenômeno da baixa eleição de mulheres e também sobre quem são essas mulheres eleitas. Para isso, podemos sinalar o conceito de capital social e de capital político trabalhado por Bourdieu que, em uma interpretação bem trivial, seria uma certificação quase que “nata” de que alguns indivíduos tenham maior acesso ao campo político e de estruturas de oportunidade políticas favoráveis, seja através do capital social, de contatos, de família, entre outros. Sacchet e Speck (2012b) pontuam que 
+
+“Tanto o capital político como o social do tipo público estão positivamente correlacionados ao financiamento eleitoral. Candidatos com mais acesso a estes recursos terão maior facilidade para arrecadar fundos de campanha. Em termos gerais, as mulheres carecem tanto de capitais políticos e social do tipo público, quanto de recursos financeiros pessoais, fazendo com que elas entrem no processo político em desigualdade de condições com os homens.” (SACCHET; SPECK, 2012b, p. 419).
+
+
+  Outro ponto sinalizado por Sacchet é o de que as mulheres são mais prejudicadas pelos partidos em eleições proporcionais, dado que, quando são selecionadas para disputas majoritárias, não sofrerão desvantagem em relação à mobilização de recursos, pois será a candidata da legenda. Nosso recorte de pesquisa serão os candidatos a deputados federais (eleições proporcionais) no pleito de 2018. 
+  Essa questão de pesquisa é importante para tentar compreender o motivo de o país ter uma das mais baixas representações na política eleitoral e para pensarmos formas de amenizarmos isso, sejam através de cotas eleitorais (como já existe), mas que sejam mais efetivas, ou até mesmo cotas no financiamento. Enfim, pensarmos formas mais satisfatórias de inclusão de mulheres em altos cargos representativos na política.Cabe à ressalva do papel dos partidos nas candidaturas femininas e o quanto responsáveis são pela inclusão ou não de mulheres em cargos importantes e o quanto isso não reflete e nem dialoga com o perfil do eleitorado brasileiro, que é composto majoritariamente por mulheres. E mesmo analisando o número de eleitores brasileiros que são filiados a partidos políticos, não há esse reflexo e nem proporcionalidade de gênero na representação em cargos de lideranças partidárias ou de comitivas das legendas. 
+  Sobre as variáveis selecionadas para o trabalho, a variável dependente será se as candidatas foram eleitas ou não. Nesse caso, não entraremos na discussão sobre o número de votos, pois como o objeto de estudo será uma eleição proporcional, nem sempre um maior número de votos quer dizer que o candidato será eleito. Portanto, nosso critério é se foi eleito deputado federal ou não. Nossas variáveis independentes serão a renda declarada pelos candidatos, o sexo (conforme identificação feita pelos concorrentes), a raça dos candidatos ao pleito (autodeclaração informada ao Tribunal Superior Eleitoral), e seu  estado civil. 
+	A teoria causal que conecta as variáveis é a de que mulheres que possuem um maior valor de bens declarados têm mais chances de serem eleitas. Em outras palavras, ter um maior valor de bens declarados é mais importante quando se é mulher candidata, pois os homens candidatos obtêm maior arrecadação de campanha (SPECK; SACCHET, 2012) consequentemente, maior sucesso eleitoral. Portanto, mulheres que possuem um maior valor de bens declarados têm mais chances de serem eleitas, pois possuem maior capital financeiro e social, e conseguem financiar a própria campanha (o conceito e a variável de capital social não será trabalhada nesse modelo, pois não temos condições e nem formas de medi-lo). As outras variáveis incluídas no modelo, já citadas anteriormente, serão utilizadas, pois para além da renda declarada, são importantes para a compreensão da causalidade e do modelo, pois fenômenos sociais são complexos e somente uma variável independente não daria conta de explicar a teoria. Por exemplo, historicamente, ser uma mulher branca candidata é diferente em diversos aspectos, inclusive na arrecadação e visibilidade do que ser uma mulher negra candidata. Assim como, ser candidata por um partido de direita é muito diferente de ser candidata por um partido de centro ou esquerda, bem como, o estado civil “casada” é mais bem visto pelo eleitorado brasileiro.
+  A hipótese principal do trabalho é a de que mulheres com um maior valor de bens declarados têm maiores chances de serem eleitas. Ou seja, ter maior patrimônio é mais importante quando se é mulher candidata. A partir disso espero observar uma relação positiva entre as variáveis operacionalizadas, pois acredito que altos níveis da variável independente (valor dos bens declarados), tenderão a coincidir com valores altos da variável dependente, a chance de eleição. 
+	Nesse cenário, meu projeto de pesquisa é do tipo “y explicado por novo x”, pois utilizei uma variável dependente já conhecida (Resultado eleitoral) e teorizei como uma nova variável independente pode causá-la (valor dos bens dos candidatos). 
+
+
+
+
+
+2. ANÁLISE DOS DADOS
+
+
+
+	2.1 Operacionalização dos conceitos teóricos em variáveis empíricas
+
+  Para a operacionalização dos conceitos teóricos em variáveis empíricas precisamos conferir a confiabilidade e a validade dos dados selecionados. A confiabilidade seria a capacidade de reprodução dos dados de forma consistente, ou seja, através da aplicação das mesmas regras de mensuração para as mesmas observações e para observadores diferentes, os resultados gerados sejam iguais. Nesse caso, as variáveis selecionadas para a regressão são confiáveis, pois não se alteram durante o período analisado (eleições de 2018). Cabe ressaltar que o banco utilizado para esse trabalho é derivado do pacote chamado “electionsBR” e contém informações a respeito das eleições brasileiras desde 1998 até 2018. Para este trabalho, utilizamos como recorte as eleições de 2018.Para tal, filtramos o banco como algumas variáveis consideradas mais importantes para melhor operação. A variável dependente (resultado) e as variáveis independentes que designam gênero, raça e estado civil não se alteram.  A variável independente valor dos bens é que pode sofrer modificações, mas somente para outra dimensão temporal, pois a partir do momento que é declarada, a informação é registrada no Tribunal Superior Eleitoral (TSE). Claro que temos o problema da omissão de bens e da não declaração, mas como não temos acesso a esses dados de valores sonegados, de modo que se faz necessário trabalhar com a auto declaração realizada por cada concorrente para a receita federal.
+  A validade da variável diz respeito à mensuração acurada da medida que se propõem medir, ou seja, uma execução fidedigna dos objetivos.  A variável dependente é resultado eleitoral. Anteriormente ela tinha cinco divisões: eleito por média, eleito por quociente eleitoral, não eleito, suplente e nulo. Para melhor mensuração transformamos em uma variável categórica binária: valor um para eleitos e atribuição zero para candidatos não eleitos. Assim, essa medida reflete acuradamente o resultado eleitoral de interesse. Quanto à validade de conteúdo, o conteúdo a ser medido é apenas o êxito na eleição. Sobre a validade de constructo esta diz respeito ao grau em que a variável dependente está relacionada a outras medidas relacionadas pela literatura. Nesse caso, a variável dependente é associada ao gênero, uma vez que é comum a afirmação do fato de que homens são eleitos com maior frequência e representam a maior parcela da câmara, tal qual, também é comum ouvir que apenas candidatos ricos conseguem se eleger deputados federais. Nessa linha, a maioria dos eleitos para o congresso nacional é branca e tem como estado civil casado. Portanto a variável dependente está relacionada com outras medidas as quais é constantemente associada. 
+  Nesse trabalho a melhor forma de mensurar a variável dependente (Resultado) é transformando-a em uma variável categórica binária, assim, valor um para eleitos e atribuição zero para candidatos não eleitos. Para a variável independente principal que é valor dos bens e é contínua numérica a forma de mensuração será através dos dados disponibilizados pela receita federal (mais uma vez é importante salientar que não temos acesso a valores não declarados). Para a variável independente gênero que é categórica binária, codificamos um para mulher e zero para homem. Para a variável independente raça que também é categórica binária codificamos o valor um para candidatos brancos e zero para candidatos não brancos (negros, pardos, indígenas, entre outros). Por fim, a variável independente casado, agrupamos o valor um para candidatos casados e o valor zero para candidatos não casados (solteiro, separados, viúvo, entre outros). 
+ 
+ 
+ 
+ 
+2.2 Fazer um esquema semelhante à figura 1.2 do livro (página 10, do livro Fundamentos da pesquisa em Ciência Política)
+
+
+
+```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+
+setwd ("C:\\Users\\havai\\Desktop\\ANÁLISE DE DADOS")
+
+knitr::include_graphics("C:\\Users\\havai\\Desktop\\ANÁLISE DE DADOS\\p11.png")
+
+```
+
+
+2.3  Descrição dos dados
+
+
+
+2.3.1 Dimensão temporal e espacial
+
+	A dimensão temporal dos dados será a eleição federal ocorrida no ano de 2018, e a dimensão espacial serão os candidatos ao cargo de deputados federais.
+
+
+
+2.3.2 Considerações sobre a amostra
+
+	Para esse trabalho será utilizado toda a população (8588 casos) que diz respeito aos candidatos ao cargo de deputados federais nas eleições de 2018. 
+
+
+```{r}
+if(!require("devtools"))install.packages("devtools")
+
+library(devtools)
+
+install.packages("dplyr")
+
+library(dplyr)
+
+devtools::install_github("silvadenisson/electionsBR")
+
+install.packages("electionsBR")
+
+library(electionsBR)
+
+candidatos_2018 <- candidate_fed(2018)
+
+glimpse(candidatos_2018)
+
+colnames(candidatos_2018)
+
+install.packages("tidyverse")
+
+library(tidyverse)
+
+library(readxl)
+
+setwd ("C:\\Users\\havai\\Desktop\\ANÁLISE DE DADOS")
+
+banco_renda <- read.csv("bem_candidato_2018_BRASIL.csv", sep = ";", dec = ",", quote = '"')
+
+banco_renda <- banco_renda %>% group_by(SQ_CANDIDATO, SG_UF)
+
+banco_renda <- banco_renda %>% summarise(valor_bens = sum(VR_BEM_CANDIDATO))
+
+banco_renda <- banco_renda %>% ungroup()
+
+install.packages("plyr")
+
+library(plyr)
+
+colnames(candidatos_2018)
+
+colnames(candidatos_2018)[16] <- "SQ_CANDIDATO"
+
+banco_tse <- join(candidatos_2018, banco_renda, by = "SQ_CANDIDATO")
+
+View(banco_tse)
+
+install.packages("memisc")
+
+library(memisc)
+
+colnames(banco_tse)
+
+banco_tse$DES_SIT_TOT_TURNO
+
+banco_tse_dep <- subset(banco_tse, c(banco_tse$DS_CARGO == "DEPUTADO FEDERAL"))
+
+write.csv(banco_tse, "banco_tse_COMPLETO.csv", row.names = FALSE)
+
+write.csv(banco_tse_dep, "banco_tse_DEPUTADOS.csv", row.names = FALSE)
+
+view(banco_tse_dep)
+
+banco_selecionado <- banco_tse_dep %>% 
+  dplyr::select(NM_CANDIDATO,SQ_CANDIDATO,SG_PARTIDO,SG_UF_NASCIMENTO,CD_GENERO,DS_GENERO,              DS_GRAU_INSTRUCAO,DS_ESTADO_CIVIL,DS_COR_RACA,DS_OCUPACAO,CD_SIT_TOT_TURNO,
+                DS_SIT_TOT_TURNO,ST_REELEICAO,valor_bens) 
+
+hist(banco_selecionado$valor_bens)
+
+summary(banco_selecionado$valor_bens)
+
+library(dplyr)
+
+library(ggthemes)
+
+summary(banco_selecionado$CD_SIT_TOT_TURNO)
+
+banco_selecionado$Resultado <- recode(banco_selecionado$CD_SIT_TOT_TURNO,
+                               1 <- c("1", "2", "3"),
+                               0 <- c("4", "5"))
+
+banco_selecionado$Gênero <- recode(banco_selecionado$CD_GENERO,
+                               1 <- c("4"),
+                               0 <- c("2"))
+
+banco_selecionado$Raça <- recode(banco_selecionado$DS_COR_RACA,
+                               1 <- c("BRANCA"),
+                               0 <- c("PARDA", "INDÍGENA", "PRETA", "AMARELA"))
+
+banco_selecionado$Casado <- recode(banco_selecionado$DS_ESTADO_CIVIL,
+                                   1 <- c("CASADO(A)"),
+                                   0 <- c("DIVORCIADO(A)", "SOLTEIRO(A)"))
+
+```
+
+
+2.3.3 Que tipo de variável você usa?
+
+  
+  Resultado (variável dependente) – variável categórica binária (1- eleito e 0 – não eleito). O gráfico indicado para observação desse tipo de variável é o gráfico de barras.No gráfico abaixo, vemos que do lado esquerdo encontram-se os candidtos que não foram eleitos e do lado direito, os candidatos eleitos para a 56ª legislatura.
+  
+
+```{r}
+ggplot(banco_selecionado, aes(x=Resultado))+
+  geom_bar()+
+  theme_classic()
+
+```
+ 
+ 
+  Gênero (variável independente) – variável categórica binária (1 - Mulher e 0- Homem). Aqui também o gráfico indicado para uma melhor observação da variável categórica gênero é o gráfico de barras. Do lado esquerdo do gráfico vimos os candidatos homens e do lado esquerdo as candidatas mulheres. Já podemos notar uma grande disparidade de gênero no número das candidaturas.
+  
+
+```{r}
+ggplot(banco_selecionado, aes(x=Gênero))+
+  geom_bar()+
+  theme_classic()
+
+```
+
+  Raça (variável independente) – variável categórica binária (1 - Branco e 0 - Não branco (preta, parda,indígena e amarela)). Nesse caso, o gráfico indicado para uma melhor observação de uma variável categórica é o gráfico de barras. Do lado esquerdo do gráfico temos os candidatos brancos e do lado direito encontram-se os candidatos não brancos.Percebemos também a grande disparidade dos candidatos na categoria raça, pois o número de concorrentes brancos é significativamente maior do que de candidatos não brancos. 
+  
+
+```{r}
+ggplot(banco_selecionado, aes(x=Raça))+
+  geom_bar()+
+  theme_classic()
+
+```
+  
+  Casado (variável independente) – variável categórica binária (1- casado e 0 - não casado (solteiro, divorciado, entre outros)). Dado que a variável é categórica, o gráfico utilizado para uma melhor visualização da variável é o gráfico de barras.Na coluna da esquerda temos os candidatos casados, na coluna do centro os não casados e na coluna da direita os não respondentes.
+
+
+```{r}
+ggplot(banco_selecionado, aes(x=Casado))+
+  geom_bar()+
+  theme_classic()
+```
+  
+  Valor_bens (variável independente pricipal) – variável contínua. Nesse caso, dado que nossa variável é contínua, existem diversas formas para observarmos os valores graficamente. Temos o histograma, a curva de densidade, o gráfico de pontos e o gráfico boxplot (que será utilizado no comando abaixo). Uma breve interpretação já mostra que teremos diversos casos de outliers.
+
+
+```{r}
+ggplot(banco_selecionado, aes(valor_bens)) +
+geom_boxplot()+
+  theme_classic()
+
+```
+
+
+
+2.3.5 Gráficos e testes adequados para descrever a associação entre as variáveis:
+
+
+a) Resultado eleitoral (variável categórica binária) quando associada a variável gênero, raça e casado o melhor teste é o Teste Chi-quadrado, pois todas são categóricas binárias. O gráfico nesse caso é o de barra. 
+Quando associada a variável valor_bens (variável contínua) o teste é o test T e o gráfico é o de densidade, boxplot ou violino. 
+
+* Teste de associação e gráfico: Resultado x Gênero 
+
+  O teste de chi-quadrado realizado para associação entre a variável resultado e a variável gênero (teste abaixo) mostra um p-valor baixo e um alto valor para o x2. Nesse caso, podemos rejeitar a hipótese nula de que as variáveis não estão associadas. Portanto, há associação entre as variáveis.
+
+```{r}
+chisq.test(banco_selecionado$Resultado, banco_selecionado$Gênero)
+
+```
+
+
+
+```{R} 
+
+ggplot(banco_selecionado, aes(Resultado, fill=Gênero))+
+    geom_bar()+
+  labs (title = "Resultado x Gênero")
+
+```
+
+* Teste de associação e gráfico: Resultado x Raça
+
+ O teste de chi-quadrado realizado para a associação entre as variáveis resultado e raça (teste abaixo) mostra um p-valor baixo e um alto valor para o x2. Nesse caso, podemos rejeitar a hipótese nula de que as variáveis não estão associadas.Portanto, há associação entre as variáveis.O gráfico na coluna da esquerda nos mostra os candidatos não eleitos e na coluna da direita, os candidatos eleitos, sendo proporcionalmente maior o número de candidatos brancos eleitos (na cor rosa).
+
+```{r}
+
+chisq.test(banco_selecionado$Resultado, banco_selecionado$Raça)
+
+```
+
+
+```{r}
+
+ggplot(banco_selecionado, aes(Resultado, fill= Raça))+
+    geom_bar()+
+  theme_classic()+
+  labs (title = "Resultado x Raça")
+
+```
+
+
+* Teste de associação e gráfico:Resultado x Casado
+
+ O teste de chi-quadrado realizado para medir a associação entre as variáveis resultado e casado (teste abaixo) mostra um p-valor baixo e um alto valor para o x2. Nesse caso, podemos rejeitar a hipótese nula de que as variáveis não estão associadas.Portanto, há associação entre as variáveis.O gráfico mostra que os casados são maioria no número de candidatos e maioria dos eleitos (na coluna da direita). 
+
+```{r}
+library(tidyverse)
+
+chisq.test(banco_selecionado$Resultado, banco_selecionado$Casado)
+
+```
+
+
+```{R}
+
+ggplot(banco_selecionado, aes(Resultado, fill= Casado))+
+    geom_bar()+
+  theme_classic()+
+  labs (title = "Resultado x Casado")
+
+```
+
+
+* Teste e gráfico de associação: Resultado x Log_Bens
+
+  Nesse caso, o test T utilizado para medir a associação entre as variáveis resultado e log_bens apresenta p-valor baixo indica que temos confiança em rejeitar a hipótese nula de que as variáveis não estão associadas. Assim, um p-valor baixo é um resultado que fortalece nossa hipótese de associação entre as variáveis (teste realizado abaixo).
+
+```{r}
+banco_selecionado$Log_Bens <- log(banco_selecionado$valor_bens)
+
+t.test (Log_Bens ~ Resultado, data = banco_selecionado)
+
+```
+
+
+```{r}
+  ggplot(banco_selecionado, aes (Log_Bens, fill=Resultado))+
+    geom_density(alpha = 0.5)+
+    theme_classic()
+  
+```
+
+
+
+2.4 Regressão logística
+
+  Nesse trabalho, especificamente, será utilizada uma regressão logística para a formulação do modelo, pois nossa variável dependente é binária (ou dummy), e “A regressão logística é a melhor ferramenta para lidar com variáveis dependentes dicotômicas...” (FERNANDES et. al., 2020). A regressão logística nos permite estimar a relação associada à ocorrência de determinado evento a partir de uma variável dependente binária em conjunto com uma ou mais variáveis independentes (categóricas ou não).  	
+  Os pressupostos da regressão logística são: ausência de multicolinearidade, ausência de outliers e relação linear entre o logito e cada variável independente (teste box-tidwell). A multicolinearidade é quando temos uma relação muito alta entre as variáveis independentes. Após o teste com a função VIF (teste realizado abaixo), todas as variáveis apresentaram baixo valores para o teste, o que significa que não há multicolinearidade entre elas.
+  Quanto aos outliers, dado que uma das nossas variáveis independentes é o valor dos bens declarados pelos candidatos, há casos de outliers, que será resolvido em regressões posteriores com a transformação da variável valor_bens em log. O teste (stdres(regressão1)) nos mostrou que o intervalo entre o resíduo mínimo é o máximo excede o valor 3.  Sobre a relação linear entre o logito da variável dependente e cada variável independente contínua, fizemos o teste chamado de box-tidwell. O teste apresenta p-valor baixo, ou seja, há alta significância estatística.
+  Para o andamento do trabalho, irei fazer uma breve introdução de como chegamos nas variáveis que serão correlacionadas. Inicialmente, após a definição do problema de pesquisa e termos a variável dependente selecionada, tivemos que codificá-la pois o " (...) o pesquisador deve ser dissuadido de recodificar uma variável contínua ou discreta em uma variável categórica dicotômica" (FERNANDES et. al., 2020). Para uma melhor operacionalização da variável recodificamos a variável contínua em categórica dicotômica. Portanto, as opções eleito por média e eleito por quociente eleitoral tornaram-se "1" e as opções não eleito, suplente e nulo tornaram-se "0". Recodificamos também a variável CD_GENERO que passou a se chamar Gênero e ter a atribuição "um" para candidatas mulheres e "zero" para candidatos homens. A variável DS_COR_RACA também foi recodificada e passou a ter a seguinte distribuição: "um" para candidatos brancos e "zero" para candidatos não brancos (parda, preta, indígena e amarela). Por fim, a variável DS_ESTADO_CIVIL passou a ser a variável casado e ter a seguinte distribuição: "um" para candidatos casados e "zero" para candidatos não casados (separado judicialmente, divorciado, solteiro e viúvo). 
+  Após essa recodificação, fizemos uma regressão com esses dados e obtivemos os seguintes resultados (regressão1):
+  
+  
+```{r}
+regressão1 <- glm(Resultado ~ Gênero + Raça + Casado + valor_bens,
+                 data = banco_selecionado, family = "binomial"(link = logit))
+
+options(scipen = 9999)
+
+summary(regressão1)
+
+```
+  
+  Na regressão1 a nossa principal variável independente (valor_bens) não obteve significância estatística.Um dos principais motivos para isso é o fato da variável renda não obter uma distribuição normal. Portanto, decidimos resolver tal impasse transformando a variável em log. A partir disso, a interpretação da regressão será feita com a variável valor_bens transformada em "Log_Bens" (regressão2).
+
+```{r}
+banco_selecionado$Log_Bens <- log(banco_selecionado$valor_bens)
+
+regressão2 <- glm(Resultado ~ Gênero + Raça + Casado + Log_Bens, data = banco_selecionado)
+
+summary(regressão2) 
+
+```
+
+```{r}
+require (mfx)
+
+logitor(Resultado ~ Gênero + Raça + Casado + Log_Bens, data = banco_selecionado)
+
+exp(coef(regressão2))
+
+```
+
+  *P-valores: O p-valor encontrado no intercepto no valor de 2.2e-16 possui alta significância estatística, sendo assim, podemos rejeitar a hipótese nula. Mesmo caso quando as variáveis independentes forem Raça e Log_bens., pois apresentam p-valor de  0.001763 e 2.2e-16, respectivamente. No caso da variável casado é o p-valor limite para conseguirmos rejeitar a hipótese nula. A variável casado não tem significância estatística e não podemos rejeitar a hipótese nula.
+
+  *Coeficientes: Quanto aos coeficientes, o intercepto sinaliza que se as demais variáveis independentes forem 0 a chance de um candidato ser eleito diminui em 74,72%, ou seja, um homem, não branco e não casado, tem 74,72% menos 
+chances de ser eleito. Em relação a variável gênero,o coeficiente obtido no valor de 0,7664, indica que as mulheres tem 23,36% menos chances de ser eleitas. 
+  A partir da regressão2, também inferimos que é 0,6978 menos provável que um candidato não branco seja eleito, ou seja, as chances de ser eleito é 30,22% menor para candidatos não brancos. Na variável casado, o coeficiente no valor de 0,9328, tendo como categoria de referência zero (nesse caso, não casado) indica que um candidato não casado tem 6,72% menos chances de ser eleito do que um candidato casado.Sobre a variável log_bens, podemos inferir que a chance de um candidato com maior valores de bens é 61,34% maior do que candidatos com baixo valor de bens.
+  
+   
+```{r}
+
+margins::margins_summary(regressão2)
+
+```  
+ 
+  Podemos interpretar os coeficientes também, através da probabilidade de tal evento acontecer. Conforme mostrado acima, não ser casado diminuiu a probabilidade de ser eleito em 0,6%. Na variável gênero inferimos que as mulheres, em média, tem uma probabilidade de 2,18% menor do que os homens de serem eleitas.Na variável raça, vimos que não ser branco diminui em 2,9% a probabilidade de eleição. Na variável log_bens, vemos que o aumento em 1% na renda do candidato, aumenta em 3% a chance desse candidato ser eleito.  
+
+
+
+  *Importância das variáveis
+ 
+  Através dos resultado obtidos e após análise do gráfico (abaixo), vimos que das variáveis selecionadas, a que mais impacta na eleição ou não dos candidatos é o log do valor de bens declarados. 
+
+```{R}
+library(sjPlot)
+
+plot_model(regressão2)
+
+```
+
+
+  *Pressupostos da regressão 
+
+
+1. Ausência de outliers:
+
+```{r}
+
+plot(regressão2, which = 5)
+
+```
+```{r}
+
+summary(stdres(regressão2))
+  
+```  
+  
+  Esse pressuposto não foi atendido, pois o valor máximo ultrapassou o valor três. Para o pressuposto ser atendido o valor mínimo e máximo devem ficar entre o intervalo -3 e 3. No gráfico abaixo podemos ver a presença de outliers.
+
+
+```{R}
+ggplot(banco_selecionado, aes(Log_Bens))+
+   geom_boxplot()
+
+```
+
+
+2. Ausência de multicolinearidade: 
+
+```{R}
+require(faraway)
+
+vif(regressão2)
+
+```
+  
+  Os VIFs medem a variância de um coeficiente da regressão aumenta se as variáveis independentes estão correlacionadas.Nesse caso, não há multicolinearidade pois os valores encontrados após o teste VIF são baixos.  
+
+
+
+
+3. Sobre a relação linear entre o logito da variável dependente e cada variável independente contínua (teste de box-tidwell).
+
+```{r}
+install.packages("performance") 
+
+install.packages("gridExtra")
+
+library (performance)
+
+library(gridExtra)
+
+check_model(regressão2)
+
+```
+ 
+  *Gráfico
+  
+```{r}
+
+ plot_model(regressão2)
+ 
+```
+  
+  
+  
+  *Intervalo de confiança:
+
+  O intercepto, as variáveis independentes gênero, raça, casado e log_bens estão dentro do intervalo de 
+confiança que é 2,5% para mais e para menos.
+
+```{R}
+
+exp(cbind(OR=coef(regressão2), confint(regressão2)))
+
+````
+
+  
+  *Interações:
+  
+
+1. Interação Gênero x Raça
+
+```{r}
+regressão3 <- glm(Resultado ~ Gênero + Raça + Casado + Log_Bens + Gênero*Raça, data = banco_selecionado)
+
+summary(regressão3)
+
+```
+
+```{r}
+library(sjPlot)
+
+plot_model (regressão3, type = "pred", 
+            terms=c("Raça", "Gênero"),
+            data=banco_selecionado)
+
+```
+ 
+  A interação entre gênero e raça não tem significância estatística (conforme demonstrado na regressão 3). No gráfico acima, vemos que não há diferenças significativas,pois os intervalos de confiança se encontram. Porém, percebemos que há diferenças significativas entre homens brancos (são eleitos) e mulheres brancas. 
+
+
+
+
+2. Interação Gênero x Log_bens
+
+```{R}
+
+regressão4 <- glm(Resultado ~ Gênero + Raça + Casado + Log_Bens
+                     + Gênero*Log_Bens, data = banco_selecionado)
+
+summary(regressão4)                    
+```
+
+```{r}
+require (mfx)
+
+logitor(Resultado ~ Gênero + Raça + Casado + Log_Bens
+                     + Gênero*Log_Bens, data = banco_selecionado)
+
+```
+
+
+```{r}  
+plot_model (regressão4, type = "pred", 
+            terms=c("Log_Bens", "Gênero"),
+            data=banco_selecionado)
+
+```
+
+  A interação entre mulher e log de bens declarados tem significância estatística. Dado que a variável log_bens é contínua, o gráfico mostra que o crescimento em uma unidade na variável log_bens aumenta a probabilidade de ser eleito, especialmente para candidatos homens (linha azul no gráfico). Nesse caso, em determinado nível de renda mais alto, os homens têm maiores chances de serem eleitos comparados com as mulheres.
+  
+  
+
+3.Interação Raça x log_bens
+
+```{r}
+regressão5 <- glm(Resultado ~ Gênero + Raça + Casado + Log_Bens
+                     + Raça*Log_Bens, data = banco_selecionado)
+
+summary(regressão5)
+
+```
+
+```{r}
+plot_model (regressão5, type = "pred", 
+            terms=c("Log_Bens", "Raça"),
+            data=banco_selecionado)
+
+
+```
+  
+  A interação entre raça e log de bens declarados também apresenta significancia estatística. O gráfico acima mostra que com um aumento no valor da variável log_bens (variável contínua) há um aumento das chances de candidatos brancos serem eleitos (linha vermelha no gráfico). Portanto, em determinado nível de renda mais alto, candidatos brancos têm uma maior probabilidade de se eleger do que candidatos não brancos..
+  
+  
+  
+ 
+ 3. CONCLUSÃO
+ 
+ 
+ 3.1 Como a sua pesquisa dá um passo a mais para o desenvolvimento teórico?
+ 
+ 
+   O projeto de pesquisa desenvolvido nesta disciplina propõem analisar, dado suas limitações, o papel da renda dos candidatos em sua consequente eleição ou "fracasso" eleitoral.  Após execução dos dados, percebemos que há relação entre o valor dos bens declarados pelos candidatos e sua consequente eleição. Há outras variáveis determinantes para as chances de eleição de um candidato, como por exemplo, gênero, raça, ou a incumbência do mandato e arrecadação da campanha (SPECK; MANCUSO, 2014).Para isso, a proposta desse modelo foi uma tentativa de compreender se candidatos com maior valor de bens declarados teriam mais chances de eleição, o que ocorre visto que a regressão do modelo demonstrou que candidatos com maior valor de bens declarados tem maiores chances de ser eleito do que um candidato com menos recursos pessoais.
+  Entretanto, é fundamental ressaltar que o valor dos bens declarados não diz respeito obrigatoriamente ao patrimônio legal do candidato uma vez que muitos bens podem não terem sido declarados a receita federal. Nesse caso, podemos considerar esses bens não declarados como uma variável omitida do modelo, dado que, não podemos verificar. Como exemplo, temos os casos de estudos de financiamento de campanha, onde sabemos da possibilidade de caixa de dois, porém como não há meios para medir essa variável, trata-se de outra variável omitida. Também é importante salientar que estamos tratando de bens pessoais do candidato e não de outros recursos arrecadados para a campanha, como doação de pessoa física, contribuição de filiados, contribuição parlamentar, fundo partidário, fundo especial de financiamento de campanha, entre outros.      
+  A partir disso, a hipótese inicial do trabalho que era ver se a renda era mais importante para mulheres candidatas não foi confirmada, pois as análises da regressão e, especialmente das interações mostrou que os homens, independente da renda tem maiores chances de serem eleitos. O fator gênero "pesa" mais na probabilidade de eleição do que a renda. A variável raça também é significativa para as chances de ser eleito, pois candidatos brancos possuem maiores chances do que candidatos não brancos. Portanto, os bens pessoais declarados pelos candidatos ao cargo de deputado federal nas eleições de 2018 contribuem significativamente para seu resultado eleitoral,e especialmente quando associados a outras categorias de gênero e raça.Evidentemente, há outros fatores que pesam e são determinantes para o sucesso eleitoral, como a incumbência do mandato , as arrecadações partidárias, a situação política, econômica e social do país,entre outros, que não foram consideradas nesse trabalho, mas serão desenvolvidas em pesquisas futuras. Para além disso, pretendemos melhorar o modelo exposto, trabalhando com os bens não declarados, através de uma variável omitida. 
+  
+ 
+ 
+ 
+ 3.2 Avaliação dos 4 hurdles
+ 
+ 
+ 
+	Em relação ao primeiro hurdle existe um mecanismo causal que conecta a variável independente a variável dependente, pois sabemos que o êxito de um candidato depende de sua campanha eleitoral e que qualquer campanha eleitoral precisa de altas quantias de dinheiro. Portanto, é razoável pensar que quanto maior o valor dos bens dos candidatos maior probabilidade do seu sucesso eleitoral. 
+  No que tange ao segundo hurdle, podemos descartar a possibilidade de que a variável dependente cause a variável independente, pois o resultado eleitoral não causa a renda dos candidatos.  Cabe à ressalva de 	que como não diferencei entre os candidatos incumbentes que estão tentando a reeleição dos desafiantes, pode haver correlação entre o resultado eleitoral e a renda, pois um candidato que esteja no cargo tem uma renda que pode contribuir para o aumento de seus bens e beneficiar em uma consequente eleição. Para fins do trabalho, definimos que é o fato da incumbência que contribui para o resultado eleitoral e não a renda decorrida do cargo de incumbência.  
+  Sobre o terceiro hurdle, que diz respeito à covariação entre a variável dependente “y” e a variável independente “x”, ou seja, maior presença de “x” está associada a maior ou menor presença de “y” foi atendido. Esse obstáculo foi superado, pois maior quantia em bens declarados (variável independente), maior chances de ser eleito (variável dependente). Obviamente, há outros fatores a serem considerados para o modelo, que serão trabalhados em pesquisas futuras.
+  Em relação ao quarto hurdle, podemos pensar então que as variáveis “z” do modelo (nesse caso, gênero, raça e estado civil) podem tornar a associação entre variável dependente e independente espúria, e tem papel fundamental para a variável dependente. É possível controlar as variáveis z que podem interferir na relação entre a variável independente e dependente trazendo tais variáveis (independentes secundárias) à regressão logística múltipla.   
+  Para futuros encaminhamentos, podemos discutir a variável “bens declarados” em eleições majoritárias e ver se esses novos resultados também influenciam na eleição para cargos majoritários. Assim como, considerarmos outras variáveis independentes para a regressão e procurar dialogar com pesquisas qualitativas para pensar em conceitos como capital social, capital político, especificidades regionais, entre outros. Há uma necessidade urgente de que mais mulheres estejam no espaço público e para que isso ocorra, será “(...) necessária também à implementação de outras medidas que assegurem condições mais equânimes de disputa eleitoral” (SACCHET, 2012a). 
+
+
+
+REFERÊNCIAS 
+
+
+Manual{title = {{electionsBR}: {R} Functions to Download and Clean {B}razilian Electoral Data}
+  author = {Fernando Meireles and Denisson Silva and Beatriz Costa}
+  year = {2016}
+  url = {http://electionsbr.com//}
+  
+  
+BOURDIEU, Pierre. A representação política. Elementos para uma teoria do campo político. In: _________________. O poder simbólico. Lisboa: Difel. 
+
+FERNANDES, A. A. T, et. al. Leia este artigo se você quiser aprender regressão logística. Revista de Sociologia e Política, 28(74), 2020, 1-20.
+GUJARATI, Damodar N.; PORTER, Dawn C. (2009). Basic econometrics. 5th ed. Boston: McGraw-Hill Irwin.
+
+KELLSTEDT, Paul M. e WHITTEN, Guy D. (2018). The Fundamentals of Political Science Research. 3rd ed. New York: Cambridge University Press.
+
+PATEMAN, Carole. O Contrato Sexual. Rio de Janeiro: Editora Paz e Terra, 1993
+
+SACCHET, Teresa SPECK, Bruno (2012b), Financiamento eleitoral, representação política e gênero: uma análise das eleições de 2006. Opinião Pública, vol. 18, Nº 01, pp. 177-197.
+
+SACCHET, Teresa; SPECK, Bruno. Dinheiro e sexo na política brasileira: financiamento de campanha e desempenho eleitoral em cargos legislativos. In: ALVES, José Eustáquio Diniz; PINTO, Céli Regina Jardim; JORDÃO, Fátima (Org.). Mulheres nas eleições de 2010. São Paulo, ABCP, 2012a. p. 417-452.
+
+
+<div/>
+
